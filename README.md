@@ -1,3 +1,4 @@
+# Work in progress
 # Telco_Default_Classification
 Code for training TabNet classification model and deploying it on FastAPI
 
@@ -12,7 +13,7 @@ Code for training TabNet classification model and deploying it on FastAPI
 6. Once the image has been built, run a container based on the image by running the following command in the command prompt: <br>
 `docker run -d --name mycontainer -p 80:80 myimage`
 7. Open a web broswer
-8. Head to http://127.0.0.1/docs
+8. Head to http://127.0.0.1:8000/docs
 9. Under POST, click on "Try it out"
 10. These are the required inputs the model takes to make a prediction:
 ` {
