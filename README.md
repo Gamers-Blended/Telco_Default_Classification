@@ -28,21 +28,21 @@ Model is based on:
 - [Paper](https://arxiv.org/pdf/1908.07442.pdf)
 
 
-## Part 2: Instructions for Deploying FastAPI Endpoint
+## Part 2: Deploying FastAPI Endpoint
 1. Clone this repo
 2. Open up the command prompt
 3. Change the directory to the root of the cloned repo - the directory should contain `main.py` <br>
 Eg:
 `cd path\to\directory`
 4. Run the following command in the command prompt to run FastAPI: <br>
-`uvicorn main:app --reload`
+`uvicorn main:app --reload` <br>
 You should see this if it's successfully run: <br>
 ![image info](./ReadMe_Images/image1.PNG)
 5. Open a web browser
 6. Head to http://127.0.0.1:8000/docs
-7. Under POST, click on "Try it out": <br>
+7. Under **POST**, click on "Try it out": <br>
 ![image info](./ReadMe_Images/image2.PNG)
-8. In the Request body textbox, modify the values of the variables. <br>
+8. In the **Request body** textbox, modify the values of the variables. <br>
 These are the inputs the model will take to make a prediction. <br>
 They have all been initialised as the int `0`. <br>
 ![image info](./ReadMe_Images/image3.PNG)
@@ -113,10 +113,10 @@ MonthlyCharges: float value to show how much customer is being charged monthly
 TotalCharges: float value to show total amount of charges
 ```
 9. Once all inputs have been set, click on the "Execute" button
-10. Under Responses, Server response, Response body, the model will output its prediction: <br>
-If the model predicts customer will default <br>
+10. Under Responses, Server response, **Response body**, the model will output its prediction: <br>
+If the model predicts customer will default: <br>
 ![image info](./ReadMe_Images/image4.PNG) <br>
-If the model predicts customer will not default <br>
+If the model predicts customer will not default: <br>
 ![image info](./ReadMe_Images/image5.PNG) <br>
 
 ## Part 3: Testing FastAPI Endpoint (Not Working)
@@ -124,7 +124,7 @@ If the model predicts customer will not default <br>
 Else, change to the directory that contains both `main.py` and `test_main.py`.
 2. Run the following command in the command prompt to test the endpoint: <br>
 `pytest` <br>
-If the model is deployed properly, the results should reflect a pass for all test cases. (unsucessfuly)
+If the model is deployed properly, the results should reflect a pass for all test cases. (unsucessful)
 
 
 ## Part 4: Deploying API on Docker
