@@ -1,5 +1,8 @@
+# import package
 from pydantic import BaseModel
-# Class which describles telco data
+
+
+# Class which describles telco data (name and dtypes)
 class Telco(BaseModel):
 	gender: int
 	SeniorCitizen: int

@@ -6,17 +6,18 @@ client = TestClient(app)
 
 
 def test_read_main():
-    # response = client.get("/1,0,0,0,10.5,0,0,1,0,0,0,0,0,0,23.5,50.50,1,0,0,0,0,1,0,1,0,0")
     response = client.get("/name")
 
     # Write simple assert statements with the standard Python expressions that need to check
     assert response.status_code == 200
-    # try:
     assert response.json() == {"Welcome To The Telco Default Classifier": "name"}
 
-    assert response.status_code == 200
-    assert response.json() == {"prediction": "No, customer unlikely to default payment"}
-    assert response.json() == {"prediction": "Yes, customer is likely to default on payment"}
+    
+    # try:
+        # assert response.status_code == 200
+        # response = client.get("/1,0,0,0,10.5,0,0,1,0,0,0,0,0,0,23.5,50.50,1,0,0,0,0,1,0,1,0,0")
+        # assert response.json() == {"prediction": "No, customer unlikely to default payment"}
+        # assert response.json() == {"prediction": "Yes, customer is likely to default on payment"}
     # except AssertionError as msg:
         # print(msg)
 
@@ -50,13 +51,9 @@ def dummy_customer():
     'PaymentMethod_Electronic_check': 0,
     'PaymentMethod_Mailed_check': 0}
 
-    return passenger2
+    return customer
 
-def test_dt_invariance(dummy_titanic_dt, dummy_passengers):
-    model = dummy_titanic_dt
-    _, p2 = dummy_passengers
-
-    # Get original survival probability of passenger 2
-    test_df = pd.DataFrame.from_dict([p2], orient='columns')
-    X, y = get_feats_and_labels(prep_df(test_df))
-    p2_prob = model.predict(X)[0]  # 1.0
+def test_model():
+    prediction = classifier.predict([customer])
+    assert response.json() == {"prediction": "No, customer unlikely to default payment"}
+    assert response.json() == {"prediction": "Yes, customer is likely to default on payment"}
