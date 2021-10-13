@@ -20,8 +20,10 @@ sklearn
 ```
 
 ## Part 1: Data Cleaning and Model Training
-Please refer to [this link](https://github.com/Gamers-Blended/Telco_Default_Classification/blob/main/Technical_Test.ipynb) to read the process. <br>
-The notebook contains steps and justification on the data cleaning process, model training and evaluation.
+Please refer to [this link](https://github.com/Gamers-Blended/Telco_Default_Classification/blob/main/Data_Processing_and_Modelling.ipynb) to read the process. <br>
+The notebook contains steps and justification on the data cleaning process, model training and evaluation. <br>
+The dataset is a tempered version of the [Kaggle Customer Churn dataset](https://www.kaggle.com/blastchar/telco-customer-churn). <br>
+It contains data on customer's telco information.
 
 Model is based on:
 - [GitHub link](https://github.com/dreamquark-ai/tabnet)
