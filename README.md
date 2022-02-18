@@ -20,31 +20,31 @@ An attempt to predict whether a customer would default on telco payments based o
 ├── requirements.txt
 ```
 
-**app**
-The `app` folder contains 3 files: `main.py`, `Telco.py` and `test_main.py`
+**app** <br>
+The `app` folder contains 3 files: `main.py`, `Telco.py` and `test_main.py` <br>
 `main.py` 
 - This is code to deploy the model via FastAPI
 
-`Telco.py` 
+`Telco.py` <br>
 - Contains a BaseModel that would be used in `main.py`
 - Lists all out input and dtypes
 
-`test_main.py` 
+`test_main.py` <br>
 - pytest code to test API endpoint
 
-**data**
+**data**<br>
 Contains dataset
 
-**saved_items**
+**saved_items**<br>
 Contains saved TabNet(`classifier.pkl`) and Neural Network(`nn_model.h5`) models trained in `Data_Processing_and_Modelling.ipynb`, as well as the MinMaxScalar(`scaler.pkl`) used on the train set
 
-**Data_Processing_and_Modelling.ipynb**
+**Data_Processing_and_Modelling.ipynb**<br>
 Notebook used to perform data cleaning model training and evaluation
 
-**Dockerfile**
+**Dockerfile**<br>
 Used to build the Docker image
 
-**requirements.txt**
+**requirements.txt**<br>
 Lists out required libraries to deploy model
 
 
@@ -152,9 +152,9 @@ Note: `mycontainer` is the name of the container, it also could be any name.
 
 ## Remarks
 - The model could predict with an accuracy rate of about **40%**. Possible actions to optimise model performance:
--  Use more of the provided features
-- Tune the number of k in SelectKBest via GridSearch CV
--  Tune the parameters of the TabNet model via GridSearch CV or RandomSearchCV from sklearn.model_selection
-- Try ensemble methods such as Random Forest Classifier, Gradient Boosting and XGBoost
-Consider several methods in handling imbalanced classification such as using Synthetic Minority Oversampling Technique (SMOTE) to oversample the minority class (customers who defaulted)
-- The dataset has a severe imbalance of class labels (73% of the customers did not default on payments). Consider some methods in handling imbalanced classification such as using Synthetic Minority Oversampling Technique (SMOTE) to oversample the minority class (customers who defaulted).
+  - Use more of the provided features
+  - Tune the number of k in SelectKBest via GridSearch CV
+  - Tune the parameters of the TabNet model via GridSearch CV or RandomSearchCV from sklearn.model_selection
+  - Try ensemble methods such as Random Forest Classifier, Gradient Boosting and XGBoost
+	
+- Consider several methods in handling imbalanced classification such as using Synthetic Minority Oversampling Technique (SMOTE) to oversample the minority class (customers who defaulted) since the dataset has a severe imbalance of class labels (73% of the customers did not default on payments)
