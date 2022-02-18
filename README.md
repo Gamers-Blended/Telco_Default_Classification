@@ -2,11 +2,51 @@
 An attempt to predict whether a customer would default on telco payments based on his/her telco data with the company.
 
 
-This repo contains:
-- A notebook that **cleans a dataset** and **trains** a TabNet classification model
-- Code to deploy TabNet model via an **FastAPI**
-- Code to perform testing for API endpoint with `pytest` (not working)
-- Code to delpy FastAPI on a Docker with a `Dockerfile`
+# Overview of Folder and Folder Structure
+```
+├── app
+│ └── main.py
+| └── Telco.py
+| └── test_main.py
+├── data
+| └── finantier_data_technical_test_dataset.csv
+├── ReadMe_Images
+├── saved_items
+│ └── classifier.pkl
+| └── nn_model.h5
+| └── scaler.pkl
+├── Data_Processing_and_Modelling.ipynb
+├── Dockerfile
+├── requirements.txt
+```
+
+**app**
+The `app` folder contains 3 files: `main.py`, `Telco.py` and `test_main.py`
+`main.py` 
+- This is code to deploy the model via FastAPI
+
+`Telco.py` 
+- Contains a BaseModel that would be used in `main.py`
+- Lists all out input and dtypes
+
+`test_main.py` 
+- pytest code to test API endpoint
+
+**data**
+Contains dataset
+
+**saved_items**
+Contains saved TabNet(`classifier.pkl`) and Neural Network(`nn_model.h5`) models trained in `Data_Processing_and_Modelling.ipynb`, as well as the MinMaxScalar(`scaler.pkl`) used on the train set
+
+**Data_Processing_and_Modelling.ipynb**
+Notebook used to perform data cleaning model training and evaluation
+
+**Dockerfile**
+Used to build the Docker image
+
+**requirements.txt**
+Lists out required libraries to deploy model
+
 
 ## Dependencies / Prerequisites
 These are the required libraries and frameworks to run the notebook and code.
@@ -14,9 +54,14 @@ These are the required libraries and frameworks to run the notebook and code.
 pandas
 numpy
 matplotlib
+seaborn
+sklearn
 torch
 pytorch_tabnet
-sklearn
+fastapi
+pydantic
+uvicorn
+pytest
 ```
 
 ## Part 1: Data Cleaning and Model Training
@@ -50,69 +95,28 @@ They have all been initialised as the int `0`. <br>
 ![image info](./ReadMe_Images/image3.PNG)
 Information about the inputs:
 ```
-	gender: int
-	SeniorCitizen: int
-	Partner: int
-	Dependents: int
-	tenure: float
-	PhoneService: int
-	MultipleLines: int
-	OnlineSecurity: int
-	OnlineBackup: int
-	DeviceProtection: int
-	TechSupport: int
-	StreamingTV: int
-	StreamingMovies: int
-	PaperlessBilling: int
-	MonthlyCharges: float
-	TotalCharges: float
-	InternetService_DSL: int
+	tenure: int
 	InternetService_Fiber_optic: int
 	InternetService_No: int
 	Contract_Month_to_month: int
-	Contract_One_year: int
 	Contract_Two_year: int
-	PaymentMethod_Bank_transfer_automatic: int
-	PaymentMethod_Credit_card_automatic: int
 	PaymentMethod_Electronic_check: int
-	PaymentMethod_Mailed_check: int
 ```
 
 Binary variables:
 ```
-  gender: Female = 1, Male = 0
-  SeniorCitizen: Yes = 1, No = 0
-	Partner: Yes = 1, No = 0
-	Dependents: Yes = 1, No = 0
-  PhoneService: Yes = 1, No = 0
-	MultipleLines: Yes = 1, No = 0
-	OnlineSecurity: Yes = 1, No = 0
-	OnlineBackup: Yes = 1, No = 0
-	DeviceProtection: Yes = 1, No = 0
-	TechSupport: Yes = 1, No = 0
-	StreamingTV: Yes = 1, No = 0
-	StreamingMovies: Yes = 1, No = 0
-	PaperlessBilling: Yes = 1, No = 0
-  InternetService_DSL: Yes = 1, No = 0
 	InternetService_Fiber_optic: Yes = 1, No = 0
 	InternetService_No: Yes = 1, No = 0
+        PaymentMethod_Electronic_check: Yes = 1, No = 0
   
-  These 3 variables are mutually exclusive:
+  These 2 variables are mutually exclusive:
 	Contract_Month_to_month: Yes = 1, No = 0
-	Contract_One_year: Yes = 1, No = 0
 	Contract_Two_year: Yes = 1, No = 0
   
-  These 4 variables are mutually exclusive:
-	PaymentMethod_Bank_transfer_automatic: Yes = 1, No = 0
-	PaymentMethod_Credit_card_automatic: Yes = 1, No = 0
-	PaymentMethod_Electronic_check: Yes = 1, No = 0
-	PaymentMethod_Mailed_check: Yes = 1, No = 0
 ```
 Numerical variables:
 ```
-tenure: float value to show how long has the customer has stayed with the telco company
-MonthlyCharges: float value to show how much customer is being charged monthly
-TotalCharges: float value to show total amount of charges
+tenure: int value to show how long has the customer has stayed with the telco company
 ```
 9. Once all inputs have been set, click on the "Execute" button
 10. Under Responses, Server response, **Response body**, the model will output its prediction: <br>
@@ -121,12 +125,15 @@ If the model predicts customer will default: <br>
 If the model predicts customer will not default: <br>
 ![image info](./ReadMe_Images/image5.PNG) <br>
 
-## Part 3: Testing FastAPI Endpoint (Not Working)
+## Part 3: Testing FastAPI Endpoint
 1. Check that current directory contains `test_main.py`. <br>
 Else, change to the directory that contains both `main.py` and `test_main.py`.
 2. Run the following command in the command prompt to test the endpoint: <br>
-`pytest` <br>
-If the model is deployed properly, the results should reflect a pass for all test cases. (unsucessful)
+`pytest` <be>
+or
+`pytest -W ignore::DeprecationWarning` to ignore `DeprecationWarning` <br>
+If the model is deployed properly, the results should reflect a pass for all test cases. <br>
+![image info](./ReadMe_Images/image6.PNG) <br>
 
 
 ## Part 4: Deploying API on Docker
@@ -144,9 +151,10 @@ Note: `mycontainer` is the name of the container, it also could be any name.
 8. Steps are identical to **Steps 7 to 10 in Part 2**
 
 ## Remarks
-- Sadly, the model could predict with an accuracy rate of about **60%**. Its performance can be improved by hyperparameter tuning and/or feature engineering.
-- Most of the features are not very corelated to whether a customer will default or not. It may be better to drop those variables.
-- The dataset has a severe imbalance of class labels (73% of the customers did not default on payments). I could consider several methods in handling imbalanced classification such as using Synthetic Minority Oversampling Technique (SMOTE) to oversample the minority class (customers who defaulted).
-- I am unsure of how to write code to perform testing of the API endpoint (part 3). There should be a test to:
-   - check that the inputs follow the mutually exclusive characteristics of certain variables
-   - check that binary variables are fed with only the int `0` or `1`, and numerical variables are given only numerical values
+- The model could predict with an accuracy rate of about **40%**. Possible actions to optimise model performance:
+-  Use more of the provided features
+- Tune the number of k in SelectKBest via GridSearch CV
+-  Tune the parameters of the TabNet model via GridSearch CV or RandomSearchCV from sklearn.model_selection
+- Try ensemble methods such as Random Forest Classifier, Gradient Boosting and XGBoost
+Consider several methods in handling imbalanced classification such as using Synthetic Minority Oversampling Technique (SMOTE) to oversample the minority class (customers who defaulted)
+- The dataset has a severe imbalance of class labels (73% of the customers did not default on payments). Consider some methods in handling imbalanced classification such as using Synthetic Minority Oversampling Technique (SMOTE) to oversample the minority class (customers who defaulted).
