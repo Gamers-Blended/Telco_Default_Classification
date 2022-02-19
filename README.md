@@ -138,17 +138,26 @@ If the model is deployed properly, the results should reflect a pass for all tes
 
 ## Part 4: Deploying API on Docker
 1. Open the command prompt
-2. Check that the directory to the root of the cloned repo - the directory should contain `Dockerfile`
+2. Check that the directory in the command prompt is the root of the cloned repo - the directory should contain `Dockerfile`
 3. Ensure Docker is running on your local system
 4. Run the following command in the command prompt to build the FastAPI image: <br>
 `docker build -t myimage .` <br>
-Note: `myimage` is the name of this image, it could be any name.
+Note: `myimage` is the name of this image, it could be any name. In the example, the image is named `telco_image`. **Building the image would take awhile!**
 5. Once the image has been built, run a container based on the image by running the following command in the command prompt: <br>
 `docker run -d --name mycontainer -p 80:80 myimage` <br>
-Note: `mycontainer` is the name of the container, it also could be any name.
-6. Open a web browser
-7. Head to http://localhost/docs
-8. Steps are identical to **Steps 7 to 10 in Part 2**
+Note: `mycontainer` is the name of the container, it also could be any name. This examples uses `telco_container` as the name of the container.
+6. Open Docker Desktop and check the **Containers / Apps** tab. <br>
+The newly-created container should be shown to be running: <br>
+![image info](./ReadMe_Images/image7.PNG)	
+7. Either
+	- Open a web browser and head to http://localhost/docs, or
+	- From Docker Destop, click "OPEN IN BROWSER" <br>
+	You will be greeted by this page: <br>
+	![image info](./ReadMe_Images/image8.PNG) <br>
+	Click on the address bar, and head to http://localhost/docs
+8. You should see this page: <br>
+![image info](./ReadMe_Images/image9.PNG)
+9. The subsequent steps are identical to **Steps 7 to 10 in Part 2**
 
 ## Remarks
 - The model could predict with an accuracy rate of about **40%**. Possible actions to optimise model performance:
