@@ -57,7 +57,7 @@ def predict_default(data:Telco):
     # make prediction
     prediction = classifier.predict([inputs])
     # predicted class with the highest probability
-    highest_proba = max(classifier.predict_proba([inputs]).tolist()[0])
+    highest_proba = max(classifier.predict_proba([inputs]).tolist()[0]) *100
 
     # 1 = Yes, 0 = No
     # convert result into a readable format
